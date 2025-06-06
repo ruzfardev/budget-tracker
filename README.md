@@ -18,6 +18,13 @@ This is the initial setup phase with:
 - No header on mobile for cleaner UI
 - Settings page with theme toggle and modern UI
 
+### Home Page Features:
+- **Welcome Section**: Personalized greeting based on time of day
+- **Income/Expense Cards**: Monthly income and expense tracking with trends
+- **Recent Transactions**: List of recent transactions with icons and categories
+- **Quick Stats**: Daily average, biggest expense, savings rate, transaction count
+- **Uzbek Sum (UZS) Support**: Proper currency formatting for Uzbekistan
+
 ## Getting Started
 
 1. Install dependencies:

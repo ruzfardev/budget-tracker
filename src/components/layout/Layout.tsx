@@ -8,7 +8,7 @@ const Layout = () => {
       <Header />
       <div className="flex">
         <Navigation />
-        <main className="flex-1 pt-6 md:pt-0 pb-28 md:pb-0">
+        <main className="flex-1 pt-2 md:pt-0 pb-24 md:pb-0">
           <Outlet />
         </main>
       </div>

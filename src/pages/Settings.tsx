@@ -88,11 +88,11 @@ const Settings = () => {
   ]
 
   return (
-    <div className="container mx-auto p-6 max-w-2xl">
-      {/* <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">Profile</h1> */}
+    <div className="container mx-auto p-4 max-w-2xl">
+      <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">Profile</h1>
 
       {/* User Profile Card */}
-      <Card className="mb-6 p-6">
+      <Card className="mb-6 p-4">
         <div className="flex items-center space-x-4">
           <div className="w-16 h-16 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white font-bold text-xl">
             JD
