@@ -59,6 +59,7 @@ A Progressive Web App (PWA) for personal budget tracking with offline capabiliti
 - **date-fns** - Date utilities
 
 ### UI Stlying
+
 - **Tailwind CSS** for utility-first styling
 - **Icons** Lucide icons for modern UI components
 - **Dark Mode** support using CSS variables and Tailwind's dark mode feature
@@ -69,8 +70,6 @@ A Progressive Web App (PWA) for personal budget tracking with offline capabiliti
 - **Navigation** using React Router for client-side routing
 - **Bottom Navigation Style** for mobile navigation (PLus item for adding new transactions)
 - **Mobile-first Design** with Tailwind's responsive utilities
-
-
 
 ### File Structure
 
@@ -152,14 +151,14 @@ budget-tracker/
 
 ```typescript
 interface Transaction {
-  id: string;
-  type: 'income' | 'expense';
-  amount: number;
-  categoryId: string;
-  description: string;
-  date: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  id: string
+  type: 'income' | 'expense'
+  amount: number
+  categoryId: string
+  description: string
+  date: Date
+  createdAt: Date
+  updatedAt: Date
 }
 ```
 
@@ -167,12 +166,12 @@ interface Transaction {
 
 ```typescript
 interface Category {
-  id: string;
-  name: string;
-  budget: number; // Monthly budget limit
-  icon: string; // Emoji or icon class
-  color: string; // For charts
-  type: 'income' | 'expense';
+  id: string
+  name: string
+  budget: number // Monthly budget limit
+  icon: string // Emoji or icon class
+  color: string // For charts
+  type: 'income' | 'expense'
 }
 ```
 
@@ -180,15 +179,15 @@ interface Category {
 
 ```typescript
 interface AppState {
-  transactions: Transaction[];
-  categories: Category[];
-  theme: 'light' | 'dark';
-  isOffline: boolean;
+  transactions: Transaction[]
+  categories: Category[]
+  theme: 'light' | 'dark'
+  isOffline: boolean
   filters: {
-    month: Date;
-    categoryId?: string;
-    type?: 'income' | 'expense';
-  };
+    month: Date
+    categoryId?: string
+    type?: 'income' | 'expense'
+  }
 }
 ```
 
@@ -275,6 +274,8 @@ const useStore = create<AppState>((set, get) => ({
 
 ### Phase 3: Transaction Management (Day 3-4)
 
+build
+
 - [ ] Create transaction services
 - [ ] Build transaction components
 - [ ] Implement CRUD operations
@@ -332,7 +333,7 @@ export default defineConfig({
       },
     }),
   ],
-});
+})
 ```
 
 ### Theme Implementation
@@ -340,14 +341,14 @@ export default defineConfig({
 ```typescript
 // Custom hook for theme management
 const useTheme = () => {
-  const [theme, setTheme] = useStore((state) => [state.theme, state.setTheme]);
+  const [theme, setTheme] = useStore((state) => [state.theme, state.setTheme])
 
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-  }, [theme]);
+    document.documentElement.classList.toggle('dark', theme === 'dark')
+  }, [theme])
 
-  return { theme, toggleTheme };
-};
+  return { theme, toggleTheme }
+}
 ```
 
 ### Offline Data Sync
@@ -364,8 +365,9 @@ const queryClient = new QueryClient({
       networkMode: 'offlineFirst',
     },
   },
-});
+})
 ```
+
 ---
 
 This plan leverages React's component model, TypeScript's type safety, and modern tooling to create a robust, maintainable budget tracker PWA with excellent developer experience and user experience.
