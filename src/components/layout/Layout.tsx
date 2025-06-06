@@ -4,11 +4,11 @@ import Navigation from './Navigation'
 
 const Layout = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 transition-colors">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
       <Header />
       <div className="flex">
         <Navigation />
-        <main className="flex-1 pb-28 md:pb-0">
+        <main className="flex-1 pt-6 md:pt-0 pb-28 md:pb-0">
           <Outlet />
         </main>
       </div>

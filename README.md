@@ -6,14 +6,17 @@ A Progressive Web App for personal budget tracking with offline capabilities.
 
 This is the initial setup phase with:
 - Vite + React + TypeScript configuration
-- Tailwind CSS for styling
+- Tailwind CSS for styling with glassmorphic design
 - React Router for navigation
-- Basic page structure (Dashboard, Transactions, Categories, Settings)
+- Basic page structure (Home, History, Budget, Profile)
 - PWA configuration with vite-plugin-pwa
 - Zustand store setup
 - React Query configuration
-- Dark mode support
+- Dark mode support (toggle in Profile/Settings page)
 - Mobile-first responsive design
+- Modern bottom navigation with floating add button
+- No header on mobile for cleaner UI
+- Settings page with theme toggle and modern UI
 
 ## Getting Started
 
