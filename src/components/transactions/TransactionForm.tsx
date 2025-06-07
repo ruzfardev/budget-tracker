@@ -11,24 +11,31 @@ interface TransactionFormProps {
   onCancel?: () => void
 }
 
-export function TransactionForm({ 
-  categories, 
-  initialData, 
+export function TransactionForm({
+  categories,
+  initialData,
   onSubmit,
-  onCancel 
+  onCancel,
 }: TransactionFormProps) {
-  const [type, setType] = useState<'income' | 'expense'>(initialData?.type || 'expense')
+  const [type, setType] = useState<'income' | 'expense'>(
+    initialData?.type || 'expense'
+  )
   const [amount, setAmount] = useState(initialData?.amount?.toString() || '0')
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(initialData?.categoryId || null)
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(
+    initialData?.categoryId || null
+  )
   const [date, setDate] = useState(initialData?.date || new Date())
   const [showKeyboard, setShowKeyboard] = useState(false)
 
   // Filter categories by type
-  const filteredCategories = categories.filter(cat => cat.type === type)
+  const filteredCategories = categories.filter((cat) => cat.type === type)
 
   // Set default category when categories load or type changes
   useEffect(() => {
-    if (filteredCategories.length > 0 && !filteredCategories.find(c => c.id === selectedCategory)) {
+    if (
+      filteredCategories.length > 0 &&
+      !filteredCategories.find((c) => c.id === selectedCategory)
+    ) {
       setSelectedCategory(filteredCategories[0].id || null)
     }
   }, [filteredCategories, selectedCategory])
@@ -39,7 +46,8 @@ export function TransactionForm({
 
     onSubmit({
       type,
-      amount: type === 'expense' ? -Math.abs(numericAmount) : Math.abs(numericAmount),
+      amount:
+        type === 'expense' ? -Math.abs(numericAmount) : Math.abs(numericAmount),
       categoryId: selectedCategory,
       description: '', // Empty description
       date,
@@ -81,15 +89,20 @@ export function TransactionForm({
       </div>
 
       {/* Amount Display */}
-      <div 
+      <div
         onClick={() => setShowKeyboard(true)}
         className="bg-white dark:bg-gray-800 rounded-xl p-4 cursor-pointer"
       >
-        <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Amount</div>
-        <div className={`text-3xl font-bold ${
-          type === 'income' ? 'text-green-600' : 'text-red-600'
-        }`}>
-          {type === 'income' ? '+' : '-'} {parseFloat(amount).toLocaleString('en-US', {
+        <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+          Amount
+        </div>
+        <div
+          className={`text-3xl font-bold ${
+            type === 'income' ? 'text-green-600' : 'text-red-600'
+          }`}
+        >
+          {type === 'income' ? '+' : '-'}{' '}
+          {parseFloat(amount).toLocaleString('en-US', {
             minimumFractionDigits: 0,
             maximumFractionDigits: 2,
           })}
@@ -114,7 +127,9 @@ export function TransactionForm({
               }`}
             >
               <div className="text-2xl mb-1">{category.icon}</div>
-              <div className="text-xs font-medium truncate">{category.name}</div>
+              <div className="text-xs font-medium truncate">
+                {category.name}
+              </div>
             </button>
           ))}
         </div>
@@ -167,6 +182,7 @@ export function TransactionForm({
               setShowKeyboard(false)
               handleSubmit()
             }}
+            // @ts-ignore
             isValid={isValid}
           />
         </div>

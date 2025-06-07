@@ -16,7 +16,7 @@
       "type": "image/x-icon"
     },
     {
-      "src": "/logo.svg",
+      "src": "/favicon.ico",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
