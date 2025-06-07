@@ -30,8 +30,7 @@ const Dashboard = () => {
   } = useTransactions()
   const { data: categories = [], isLoading: categoriesLoading } =
     useCategories()
-  const { data: categoryStats = [], isLoading: categoryStatsLoading } =
-    useCategoryStats(currentMonth)
+  const { isLoading: categoryStatsLoading } = useCategoryStats(currentMonth)
 
   // Filter transactions for current month display
   const transactions = allTransactions.filter((t: Transaction) => {
