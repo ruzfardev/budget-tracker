@@ -3,12 +3,34 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --primary-500: 59 130 246; /* #3b82f6 in RGB */
+    --primary-600: 37 99 235; /* #2563eb in RGB */
+  }
+  
   html {
     color-scheme: light;
   }
 
   html.dark {
     color-scheme: dark;
+  }
+  
+  /* iOS PWA Status Bar */
+  @supports (padding-top: env(safe-area-inset-top)) {
+    body {
+      padding-top: env(safe-area-inset-top);
+    }
+  }
+  
+  /* Ensure theme color is applied to body background */
+  body {
+    background-color: #ffffff;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dark body {
+    background-color: #111827;
   }
 }
 
@@ -28,10 +50,10 @@
   
   /* Plus button glow effect */
   .plus-button {
-    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35), 0 0 0 1px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 4px 20px rgba(var(--primary-500), 0.35), 0 0 0 1px rgba(var(--primary-500), 0.1);
   }
   
   .plus-button:hover {
-    box-shadow: 0 6px 30px rgba(99, 102, 241, 0.45), 0 0 0 1px rgba(99, 102, 241, 0.2);
+    box-shadow: 0 6px 30px rgba(var(--primary-500), 0.45), 0 0 0 1px rgba(var(--primary-500), 0.2);
   }
 }

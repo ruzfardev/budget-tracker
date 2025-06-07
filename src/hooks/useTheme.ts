@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import useStore from '../store/useStore'
+import { updateMobileThemeColor } from '../utils/mobileTheme'
 
 export function useTheme() {
   const { theme, setTheme, toggleTheme } = useStore()
@@ -34,17 +35,8 @@ export function useTheme() {
       document.documentElement.classList.remove('dark')
     }
     
-    // Update theme-color meta tag for mobile status bar
-    const themeColorMeta = document.getElementById('theme-color') as HTMLMetaElement
-    const appleStatusBarMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]') as HTMLMetaElement
-    
-    if (themeColorMeta) {
-      themeColorMeta.content = theme === 'dark' ? '#111827' : '#faf5ff' // gray-900 : purple-50
-    }
-    
-    if (appleStatusBarMeta) {
-      appleStatusBarMeta.content = theme === 'dark' ? 'black' : 'default'
-    }
+    // Update mobile theme colors
+    updateMobileThemeColor(theme)
   }, [theme])
 
   return { theme, setTheme, toggleTheme }

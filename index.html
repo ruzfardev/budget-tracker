@@ -5,7 +5,13 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content="Personal budget tracking app with offline support">
-    <meta name="theme-color" content="#000" id="theme-color">
+    
+    <!-- Theme colors for different platforms -->
+    <meta name="theme-color" content="#3b82f6" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1e3a8a" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#3b82f6" id="theme-color">
+    <meta name="msapplication-navbutton-color" content="#3b82f6">
+    
     <link rel="manifest" href="/manifest.json">
     
     <!-- iOS specific -->
@@ -30,11 +36,25 @@
         
         if (isDark) {
           document.documentElement.classList.add('dark');
-          document.getElementById('theme-color').content = '#111827'; // gray-900
-          document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').content = 'black';
+          // Update all theme color meta tags
+          const themeColor = document.getElementById('theme-color');
+          if (themeColor) themeColor.content = '#1e3a8a'; // primary-900
+          
+          const msThemeColor = document.querySelector('meta[name="msapplication-navbutton-color"]');
+          if (msThemeColor) msThemeColor.content = '#1e3a8a';
+          
+          const appleStatusBar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+          if (appleStatusBar) appleStatusBar.content = 'black-translucent';
         } else {
-          document.getElementById('theme-color').content = '#faf5ff'; // purple-50
-          document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').content = 'default';
+          // Update all theme color meta tags
+          const themeColor = document.getElementById('theme-color');
+          if (themeColor) themeColor.content = '#3b82f6'; // primary-500
+          
+          const msThemeColor = document.querySelector('meta[name="msapplication-navbutton-color"]');
+          if (msThemeColor) msThemeColor.content = '#3b82f6';
+          
+          const appleStatusBar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+          if (appleStatusBar) appleStatusBar.content = 'default';
         }
       })();
     </script>

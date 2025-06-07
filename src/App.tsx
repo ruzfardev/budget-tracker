@@ -6,7 +6,9 @@ import Transactions from './pages/Transactions'
 import Categories from './pages/Categories'
 import Settings from './pages/Settings'
 import AddTransaction from './pages/AddTransaction'
+import ThemeDebug from './pages/ThemeDebug'
 import { useTheme, useOffline } from './hooks'
+import { useMobileThemeSync } from './hooks/useMobileThemeSync'
 
 // Create a client with offline support
 const queryClient = new QueryClient({
@@ -26,6 +28,7 @@ function App() {
   // Initialize theme and offline detection
   useTheme()
   useOffline()
+  useMobileThemeSync() // Sync theme colors on mobile
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -39,6 +42,7 @@ function App() {
             <Route path="categories" element={<Categories />} />
             <Route path="settings" element={<Settings />} />
             <Route path="/add-transaction" element={<AddTransaction />} />
+            <Route path="/theme-debug" element={<ThemeDebug />} />
           </Route>
         </Routes>
       </BrowserRouter>
