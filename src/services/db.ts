@@ -66,18 +66,18 @@ export const dbOperations = {
     } as Transaction)
   },
 
-  async updateTransaction(id: string, updates: Partial<Transaction>) {
+  async updateTransaction(id: number, updates: Partial<Transaction>) {
     return await db.transactions.update(id, {
       ...updates,
       updatedAt: new Date()
     })
   },
 
-  async deleteTransaction(id: string) {
+  async deleteTransaction(id: number) {
     return await db.transactions.delete(id)
   },
 
-  async getTransactions(filters?: { month?: Date; categoryId?: string; type?: 'income' | 'expense' }) {
+  async getTransactions(filters?: { month?: Date; categoryId?: number; type?: 'income' | 'expense' }) {
     let query = db.transactions.toArray()
     
     if (filters) {
@@ -112,11 +112,11 @@ export const dbOperations = {
     return await db.categories.add(category as Category)
   },
 
-  async updateCategory(id: string, updates: Partial<Category>) {
+  async updateCategory(id: number, updates: Partial<Category>) {
     return await db.categories.update(id, updates)
   },
 
-  async deleteCategory(id: string) {
+  async deleteCategory(id: number) {
     // Check if category has transactions
     const transactionCount = await db.transactions.where('categoryId').equals(id).count()
     if (transactionCount > 0) {
@@ -135,7 +135,7 @@ export const dbOperations = {
   // Analytics
   async getMonthlyStats(month: Date) {
     const startOfMonth = new Date(month.getFullYear(), month.getMonth(), 1)
-    const endOfMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0)
+    const endOfMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0, 23, 59, 59, 999)
     
     const transactions = await db.transactions
       .filter(t => {
@@ -146,7 +146,7 @@ export const dbOperations = {
     
     const income = transactions
       .filter(t => t.type === 'income')
-      .reduce((sum, t) => sum + t.amount, 0)
+      .reduce((sum, t) => sum + Math.abs(t.amount), 0)
     
     const expenses = transactions
       .filter(t => t.type === 'expense')

@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard'
 import Transactions from './pages/Transactions'
 import Categories from './pages/Categories'
 import Settings from './pages/Settings'
+import AddTransaction from './pages/AddTransaction'
 import { useTheme, useOffline } from './hooks'
 
 // Create a client with offline support
@@ -28,13 +29,16 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+      <BrowserRouter
+        future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+      >
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Dashboard />} />
             <Route path="transactions" element={<Transactions />} />
             <Route path="categories" element={<Categories />} />
             <Route path="settings" element={<Settings />} />
+            <Route path="/add-transaction" element={<AddTransaction />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -1,8 +1,8 @@
 export interface Transaction {
-  id: string
+  id?: number  // Make it optional and number for Dexie auto-increment
   type: 'income' | 'expense'
   amount: number
-  categoryId: string
+  categoryId: number  // Changed to number to match Category id
   description: string
   date: Date
   createdAt: Date
@@ -10,7 +10,7 @@ export interface Transaction {
 }
 
 export interface Category {
-  id: string
+  id?: number  // Make it optional and number for Dexie auto-increment
   name: string
   budget: number
   icon: string

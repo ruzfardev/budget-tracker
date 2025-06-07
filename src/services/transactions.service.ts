@@ -6,14 +6,14 @@ import { dbOperations } from './db'
 export const transactionKeys = {
   all: ['transactions'] as const,
   lists: () => [...transactionKeys.all, 'list'] as const,
-  list: (filters?: { month?: Date; categoryId?: string; type?: 'income' | 'expense' }) => 
+  list: (filters?: { month?: Date; categoryId?: number; type?: 'income' | 'expense' }) => 
     [...transactionKeys.lists(), filters] as const,
   details: () => [...transactionKeys.all, 'detail'] as const,
-  detail: (id: string) => [...transactionKeys.details(), id] as const,
+  detail: (id: number) => [...transactionKeys.details(), id] as const,
 }
 
 // Hooks
-export function useTransactions(filters?: { month?: Date; categoryId?: string; type?: 'income' | 'expense' }) {
+export function useTransactions(filters?: { month?: Date; categoryId?: number; type?: 'income' | 'expense' }) {
   return useQuery({
     queryKey: transactionKeys.list(filters),
     queryFn: () => dbOperations.getTransactions(filters),
@@ -36,7 +36,7 @@ export function useUpdateTransaction() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ id, updates }: { id: string; updates: Partial<Transaction> }) => 
+    mutationFn: ({ id, updates }: { id: number; updates: Partial<Transaction> }) => 
       dbOperations.updateTransaction(id, updates),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: transactionKeys.all })
@@ -48,7 +48,7 @@ export function useDeleteTransaction() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (id: string) => dbOperations.deleteTransaction(id),
+    mutationFn: (id: number) => dbOperations.deleteTransaction(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: transactionKeys.all })
     },

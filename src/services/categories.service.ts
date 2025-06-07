@@ -8,7 +8,7 @@ export const categoryKeys = {
   lists: () => [...categoryKeys.all, 'list'] as const,
   list: (type?: 'income' | 'expense') => [...categoryKeys.lists(), type] as const,
   details: () => [...categoryKeys.all, 'detail'] as const,
-  detail: (id: string) => [...categoryKeys.details(), id] as const,
+  detail: (id: number) => [...categoryKeys.details(), id] as const,
   stats: (month: Date) => [...categoryKeys.all, 'stats', month] as const,
 }
 
@@ -36,7 +36,7 @@ export function useUpdateCategory() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ id, updates }: { id: string; updates: Partial<Category> }) => 
+    mutationFn: ({ id, updates }: { id: number; updates: Partial<Category> }) => 
       dbOperations.updateCategory(id, updates),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: categoryKeys.all })
@@ -48,7 +48,7 @@ export function useDeleteCategory() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (id: string) => dbOperations.deleteCategory(id),
+    mutationFn: (id: number) => dbOperations.deleteCategory(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: categoryKeys.all })
     },

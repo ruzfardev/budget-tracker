@@ -1,7 +1,8 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { Home, Clock, Wallet2, User, Plus } from 'lucide-react'
 
 const Navigation = () => {
+  const navigate = useNavigate()
   const navItems = [
     { path: '/', icon: Home, label: 'Home' },
     { path: '/transactions', icon: Clock, label: 'History' },
@@ -54,7 +55,7 @@ const Navigation = () => {
               {/* Center Plus Button - Positioned absolutely */}
               <button
                 className="plus-button absolute left-1/2 -translate-x-1/2 -top-2 bg-primary-600 dark:bg-primary-500 text-white p-3.5 rounded-full hover:bg-primary-700 dark:hover:bg-primary-600 transform hover:scale-105 active:scale-95 z-20"
-                onClick={() => console.log('Add transaction clicked')}
+                onClick={() => navigate('/add-transaction')}
               >
                 <Plus className="w-7 h-7" strokeWidth={2.5} />
               </button>
@@ -101,7 +102,7 @@ const Navigation = () => {
           {/* Add Transaction Button for Desktop */}
           <button
             className="w-full mb-4 bg-primary-600 dark:bg-primary-500 text-white p-3 rounded-lg shadow hover:bg-primary-700 dark:hover:bg-primary-600 flex items-center justify-center space-x-2"
-            onClick={() => console.log('Add transaction clicked')}
+            onClick={() => navigate('/add-transaction')}
           >
             <Plus className="w-5 h-5" />
             <span>Add Transaction</span>
