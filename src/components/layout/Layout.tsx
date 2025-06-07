@@ -1,7 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import Header from './Header'
 import Navigation from './Navigation'
-import { OfflineIndicator } from '../common'
 
 const Layout = () => {
   return (
