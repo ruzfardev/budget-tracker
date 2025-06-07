@@ -12,8 +12,8 @@ interface AppState {
 }
 
 const useStore = create<AppState>((set) => ({
-  // Theme
-  theme: 'light',
+  // Theme - Initialize from localStorage if available
+  theme: (typeof window !== 'undefined' && localStorage.getItem('theme') as 'light' | 'dark') || 'light',
   setTheme: (theme) => set({ theme }),
   toggleTheme: () => set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' })),
   

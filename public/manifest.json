@@ -1,0 +1,25 @@
+{
+  "name": "Budget Tracker",
+  "short_name": "Budget",
+  "description": "Personal budget tracking app with offline support",
+  "theme_color": "#faf5ff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
+  "id": "budget-tracker-pwa",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

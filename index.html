@@ -5,7 +5,8 @@
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content="Personal budget tracking app with offline support">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#000" id="theme-color">
+    <link rel="manifest" href="/manifest.json">
     
     <!-- iOS specific -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -20,6 +21,23 @@
     <meta name="format-detection" content="telephone=no">
     
     <title>Budget Tracker</title>
+    
+    <!-- Apply theme before React loads to prevent flash -->
+    <script>
+      (function() {
+        const theme = localStorage.getItem('theme');
+        const isDark = theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+          document.getElementById('theme-color').content = '#111827'; // gray-900
+          document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').content = 'black';
+        } else {
+          document.getElementById('theme-color').content = '#faf5ff'; // purple-50
+          document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').content = 'default';
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -16,7 +16,9 @@
     "zustand": "^4.5.0",
     "@tanstack/react-query": "^5.17.19",
     "date-fns": "^3.3.1",
-    "lucide-react": "^0.323.0"
+    "lucide-react": "^0.323.0",
+    "dexie": "^3.2.4",
+    "dexie-react-hooks": "^1.1.7"
   },
   "devDependencies": {
     "@types/react": "^18.2.48",
