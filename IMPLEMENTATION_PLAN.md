@@ -297,27 +297,6 @@ const useStore = create<AppState>((set, get) => ({
 - [ ] Create category services
 - [ ] Add budget visualizations
 
-### Phase 5: Dashboard & Analytics (Day 6)
-
-- [ ] Integrate Chart.js
-- [ ] Build dashboard components
-- [ ] Create data aggregation hooks
-- [ ] Implement responsive charts
-
-### Phase 6: PWA Features (Day 7)
-
-- [ ] Configure Workbox
-- [ ] Implement offline detection
-- [ ] Set up background sync
-- [ ] Test installation flow
-
-### Phase 7: Polish & Optimization (Day 8)
-
-- [ ] Code splitting
-- [ ] Performance optimization
-- [ ] Accessibility improvements
-- [ ] Cross-browser testing
-
 ## Key Implementation Details
 
 ### Service Worker Configuration (Vite PWA)

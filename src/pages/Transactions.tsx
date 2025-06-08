@@ -1,16 +1,25 @@
 import { useState } from 'react'
-import { Card } from '../components/common'
-import { TransactionList } from '../components/transactions'
+import { useNavigate } from 'react-router-dom'
+import { Card, ConfirmDialog } from '../components/common'
+import { TransactionList, TransactionDetailsModal } from '../components/transactions'
 import { useTransactions, useCategories } from '../hooks'
+import { Transaction } from '../types'
+import { useDeleteTransaction } from '../services/transactions.service'
+import { Trash2 } from 'lucide-react'
 
 const Transactions = () => {
+  const navigate = useNavigate()
   const [filterType, setFilterType] = useState<'all' | 'income' | 'expense'>(
     'all'
   )
+  const [deletingTransaction, setDeletingTransaction] = useState<Transaction | null>(null)
+  const [viewingTransaction, setViewingTransaction] = useState<Transaction | null>(null)
+  
   const { data: transactions = [], isLoading } = useTransactions(
     filterType === 'all' ? undefined : { type: filterType }
   )
   const { data: categories = [] } = useCategories()
+  const deleteTransaction = useDeleteTransaction()
 
   return (
     <div className="container mx-auto p-4 max-w-4xl">
@@ -68,12 +77,47 @@ const Transactions = () => {
             transactions={transactions}
             categories={categories}
             onTransactionClick={(transaction) => {
-              console.log('Transaction clicked:', transaction)
-              // TODO: Implement edit/delete functionality
+              setViewingTransaction(transaction)
+            }}
+            onTransactionEdit={(transaction) => {
+              navigate('/add-transaction', { state: { transaction } })
+            }}
+            onTransactionDelete={(transaction) => {
+              setDeletingTransaction(transaction)
             }}
           />
         )}
       </Card>
+
+      {/* View Transaction Details Modal */}
+      <TransactionDetailsModal
+        isOpen={!!viewingTransaction}
+        onClose={() => setViewingTransaction(null)}
+        transaction={viewingTransaction}
+        category={categories.find(c => c.id === viewingTransaction?.categoryId)}
+      />
+
+      {/* Delete Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={!!deletingTransaction}
+        onClose={() => setDeletingTransaction(null)}
+        onConfirm={() => {
+          if (deletingTransaction?.id) {
+            deleteTransaction.mutate(deletingTransaction.id, {
+              onSuccess: () => {
+                setDeletingTransaction(null)
+              }
+            })
+          }
+        }}
+        title="Delete Transaction"
+        message={`Are you sure you want to delete this ${deletingTransaction?.type} transaction of ${deletingTransaction?.amount ? `${Math.abs(deletingTransaction.amount).toLocaleString('uz-UZ')} so'm` : ''}?`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        variant="danger"
+        icon={<Trash2 className="w-8 h-8" />}
+        isLoading={deleteTransaction.isPending}
+      />
     </div>
   )
 }
