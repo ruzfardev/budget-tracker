@@ -1,17 +1,24 @@
 import { Transaction, Category } from '../../types'
 import { TransactionItem } from './TransactionItem'
+import { SwipeableTransactionItem } from './SwipeableTransactionItem'
 
 interface TransactionListProps {
   transactions: Transaction[]
   categories: Category[]
   onTransactionClick?: (transaction: Transaction) => void
+  onTransactionEdit?: (transaction: Transaction) => void
+  onTransactionDelete?: (transaction: Transaction) => void
 }
 
 export function TransactionList({ 
   transactions, 
   categories,
-  onTransactionClick 
+  onTransactionClick,
+  onTransactionEdit,
+  onTransactionDelete
 }: TransactionListProps) {
+  // Check if device supports touch
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
   if (transactions.length === 0) {
     return (
       <div className="text-center py-12">
@@ -60,12 +67,16 @@ export function TransactionList({
             <div className="space-y-1">
               {groupedTransactions[date].map((transaction, index) => {
                 const category = categories.find(c => c.id === transaction.categoryId)
+                const Component = isTouchDevice ? SwipeableTransactionItem : TransactionItem
+                
                 return (
-                  <TransactionItem
+                  <Component
                     key={transaction.id || `${date}-${index}`}
                     transaction={transaction}
                     category={category}
                     onClick={() => onTransactionClick?.(transaction)}
+                    onEdit={() => onTransactionEdit?.(transaction)}
+                    onDelete={() => onTransactionDelete?.(transaction)}
                   />
                 )
               })}

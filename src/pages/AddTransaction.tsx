@@ -1,21 +1,43 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Calendar, Tag } from 'lucide-react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { Calendar, Tag, ArrowLeft } from 'lucide-react'
 import { format } from 'date-fns'
 import { NumericKeyboard } from '../components/transactions/NumericKeyboard'
-import { useCategories, useAddTransaction } from '../hooks'
-import { Category } from '../types'
+import {
+  useCategories,
+  useAddTransaction,
+  useUpdateTransaction,
+} from '../hooks'
+import { Category, Transaction } from '../types'
 import { Card } from '../components/common'
 
 export default function AddTransaction() {
   const navigate = useNavigate()
-  const [type, setType] = useState<'income' | 'expense'>('expense')
-  const [amount, setAmount] = useState('0')
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
-  const [date, setDate] = useState(new Date())
+  const location = useLocation()
+  const editingTransaction = location.state?.transaction as
+    | Transaction
+    | undefined
+  const isEditing = !!editingTransaction
+
+  const [type, setType] = useState<'income' | 'expense'>(
+    editingTransaction?.type || 'expense'
+  )
+  const [amount, setAmount] = useState(
+    editingTransaction ? Math.abs(editingTransaction.amount).toString() : '0'
+  )
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(
+    editingTransaction?.categoryId || null
+  )
+  const [date, setDate] = useState(
+    editingTransaction ? new Date(editingTransaction.date) : new Date()
+  )
+  const [description, setDescription] = useState(
+    editingTransaction?.description || ''
+  )
 
   const { data: categories = [] } = useCategories()
   const addTransaction = useAddTransaction()
+  const updateTransaction = useUpdateTransaction()
 
   // Filter categories by type
   const filteredCategories = categories.filter((cat) => cat.type === type)
@@ -34,14 +56,23 @@ export default function AddTransaction() {
     const numericAmount = parseFloat(amount)
     if (numericAmount <= 0 || !selectedCategory) return
 
-    await addTransaction.mutateAsync({
+    const transactionData = {
       type,
       amount:
         type === 'expense' ? -Math.abs(numericAmount) : Math.abs(numericAmount),
       categoryId: selectedCategory,
-      description: '', // Empty description
+      description,
       date,
-    })
+    }
+
+    if (isEditing && editingTransaction?.id) {
+      await updateTransaction.mutateAsync({
+        id: editingTransaction.id,
+        updates: transactionData,
+      })
+    } else {
+      await addTransaction.mutateAsync(transactionData)
+    }
 
     navigate(-1)
   }
@@ -49,12 +80,21 @@ export default function AddTransaction() {
   const isValid = parseFloat(amount) > 0 && selectedCategory
 
   return (
-    <div
-      style={{ height: 'calc(100vh - 105px)' }}
-      className="flex flex-col bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800"
-    >
+    <div className="flex flex-col h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+      {/* Header */}
+      <div className="flex items-center gap-4 p-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700">
+        <button
+          onClick={() => navigate(-1)}
+          className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </button>
+        <h1 className="text-xl font-semibold">
+          {isEditing ? 'Edit Transaction' : 'Add Transaction'}
+        </h1>
+      </div>
       {/* Scrollable Content */}
-      <div className="flex-1">
+      <div className="flex-1 overflow-y-auto">
         <div className="p-4 space-y-3">
           {/* Type Selector */}
           <div className="bg-gray-100 dark:bg-gray-800 rounded-xl p-1 flex">
@@ -97,10 +137,10 @@ export default function AddTransaction() {
                 type === 'income' ? 'text-green-600' : 'text-red-600'
               }`}
             >
-              {type === 'income' ? '+' : '-'}{' '}
-              {parseFloat(amount).toLocaleString('en-US', {
+              {type === 'income' ? '+' : '-'}
+              {parseFloat(amount).toLocaleString('uz-UZ', {
                 minimumFractionDigits: 0,
-                maximumFractionDigits: 2,
+                maximumFractionDigits: 0,
               })}
             </div>
           </Card>
@@ -143,6 +183,20 @@ export default function AddTransaction() {
               value={format(date, 'yyyy-MM-dd')}
               onChange={(e) => setDate(new Date(e.target.value))}
               className="w-full px-2 py-1.5 text-sm bg-gray-50 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+            />
+          </div>
+
+          {/* Description (Optional) */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-3">
+            <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+              Description (Optional)
+            </div>
+            <input
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Add a note..."
+              className="w-full px-2 py-1.5 text-sm bg-gray-50 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 placeholder-gray-400"
             />
           </div>
         </div>

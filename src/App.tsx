@@ -41,9 +41,9 @@ function App() {
             <Route path="transactions" element={<Transactions />} />
             <Route path="categories" element={<Categories />} />
             <Route path="settings" element={<Settings />} />
-            <Route path="/add-transaction" element={<AddTransaction />} />
             <Route path="/theme-debug" element={<ThemeDebug />} />
           </Route>
+          <Route path="/add-transaction" element={<AddTransaction />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
