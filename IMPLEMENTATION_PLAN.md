@@ -24,8 +24,6 @@ A Progressive Web App (PWA) for personal budget tracking with offline capabiliti
 ### 3. Dashboard & Analytics
 
 - Monthly overview with income vs expenses
-- Category-wise spending breakdown (pie/donut chart)
-- Monthly trends (line chart)
 - Quick stats cards (total balance, monthly spending, etc.)
 
 ### 4. Offline Functionality
@@ -53,7 +51,6 @@ A Progressive Web App (PWA) for personal budget tracking with offline capabiliti
 - **React Router** - Client-side routing
 - **Zustand** - State management
 - **React Query + IndexedDB** - Data persistence and caching
-- **Chart.js + react-chartjs-2** - Data visualization
 - **Workbox** - Service Worker management
 - **React Hook Form** - Form handling
 - **date-fns** - Date utilities
@@ -100,7 +97,6 @@ budget-tracker/
 │   │   │   ├── BalanceCard.tsx
 │   │   │   ├── StatsCard.tsx
 │   │   │   ├── RecentTransactions.tsx
-│   │   │   └── SpendingChart.tsx
 │   │   ├── transactions/
 │   │   │   ├── TransactionForm.tsx
 │   │   │   ├── TransactionList.tsx
@@ -212,7 +208,6 @@ interface AppState {
 
    - BalanceCard: Current balance display
    - StatsCard: Quick statistics
-   - SpendingChart: Monthly breakdown
    - RecentTransactions: Latest activity
 
 4. **Transaction Components**
@@ -299,10 +294,8 @@ const useStore = create<AppState>((set, get) => ({
 
 ### Phase 5: Dashboard & Analytics (Day 6)
 
-- [ ] Integrate Chart.js
 - [ ] Build dashboard components
 - [ ] Create data aggregation hooks
-- [ ] Implement responsive charts
 
 ### Phase 6: PWA Features (Day 7)
 

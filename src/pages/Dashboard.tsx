@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Card } from '../components/common'
-import { SummaryCard } from '../components/dashboard'
+import { FinancialCard } from '../components/dashboard'
 import { TransactionItem } from '../components/transactions'
 import {
   useTransactions,
@@ -108,72 +108,31 @@ const Dashboard = () => {
     <div className="container mx-auto p-4 max-w-7xl">
       {/* Welcome Section */}
       <div className="mb-8">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">
-              {greeting}, {userName}! 👋
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400">
-              Here's your financial overview for{' '}
-              {currentMonth.toLocaleDateString('en-US', {
-                month: 'long',
-                year: 'numeric',
-              })}
-            </p>
-          </div>
-          <button
-            onClick={() => {
-              const newName = prompt('Enter your name:', userName)
-              if (newName) {
-                setUserName(newName)
-                localStorage.setItem('userName', newName)
-              }
-            }}
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-          >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-              />
-            </svg>
-          </button>
-        </div>
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
+          {greeting}, {userName}! 👋
+        </h1>
       </div>
 
-      {/* Income/Expense Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div>
-          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">
-            Monthly Income
-          </h3>
-          <SummaryCard amount={monthlyIncome} type="income" />
-        </div>
-        <div>
-          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">
-            Monthly Expenses
-          </h3>
-          <SummaryCard amount={monthlyExpense} type="expense" />
-        </div>
-        <div>
-          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">
-            Net Balance
-          </h3>
-          <Card className="p-6">
-            <p
-              className={`text-2xl font-bold ${monthlyBalance >= 0 ? 'text-green-600' : 'text-red-600'}`}
-            >
-              {formatCurrency(monthlyBalance)}
-            </p>
-          </Card>
-        </div>
+      {/* Financial Cards */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+        <FinancialCard
+          type="income"
+          amount={monthlyIncome}
+          title="Monthly Income"
+          subtitle="This month"
+        />
+        <FinancialCard
+          type="expense"
+          amount={monthlyExpense}
+          title="Monthly Spending"
+          subtitle="Burning through cash"
+        />
+        <FinancialCard
+          type="balance"
+          amount={monthlyBalance}
+          title="Net Balance"
+          subtitle={monthlyBalance >= 0 ? 'Looking good!' : 'Needs attention'}
+        />
       </div>
 
       {/* Recent Transactions */}
