@@ -127,12 +127,6 @@ const Dashboard = () => {
           title="Monthly Spending"
           subtitle="Burning through cash"
         />
-        <FinancialCard
-          type="balance"
-          amount={monthlyBalance}
-          title="Net Balance"
-          subtitle={monthlyBalance >= 0 ? 'Looking good!' : 'Needs attention'}
-        />
       </div>
 
       {/* Recent Transactions */}
